@@ -1,9 +1,10 @@
 import Image from "next/image";
+import AppContainer from "./components/AppContainer";
 
 export default function Page() {
   return (
-    <div className={`flex min-h-screen min-w-screen`}>
-      <div className="flex flex-col min-h-full items-center m-8 gap-8 ">
+    <div className={`flex flex-row min-h-screen min-w-screen`}>
+      <div className="flex flex-col min-h-full items-center m-8 gap-8">
         <div className="flex flex-col gap-1 items-center">
           <Image 
             src="/txt_file.png"
@@ -36,6 +37,7 @@ export default function Page() {
           height={100}
         />
       </div>
+      <AppContainer header={true} headerText={"Console"} children={null}/>
     </div>
   );
 }
