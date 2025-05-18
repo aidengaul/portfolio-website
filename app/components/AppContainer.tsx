@@ -16,7 +16,7 @@ export default function AppContainer({
                 <div className="bg-[#88878D] pb-1 pr-1">
                     <div className={`bg-[#C5C5CA] p-1`}>
                         {
-                            header && <p className="text-2xl p-1">{headerText}</p>
+                            header && <p className="text-3xl pl-1 py-2">{headerText}</p>
                         }
                         {children}
                     </div>

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AppContainer from "./components/AppContainer";
+import ConsoleWindow from "./components/ConsoleWindow";
 
 export default function Page() {
   return (
@@ -37,7 +37,7 @@ export default function Page() {
           height={100}
         />
       </div>
-      <AppContainer header={true} headerText={"Console"} children={null}/>
+      <ConsoleWindow />
     </div>
   );
 }
