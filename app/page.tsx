@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ConsoleWindow from "./components/ConsoleWindow";
+import ConfirmationWindow from "./components/ConfirmationWindow";
 
 export default function Page() {
   return (
@@ -38,6 +39,7 @@ export default function Page() {
         />
       </div>
       <ConsoleWindow />
+      <ConfirmationWindow />
     </div>
   );
 }
