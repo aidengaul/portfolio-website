@@ -10,7 +10,7 @@ Y8   I8I   88 88~~~~~ 88      8b      88    88 88  88  88 88~~~~~
  \`8b8' \`8d8'  Y88888P Y88888P  \`Y88P'  \`Y88P'  YP  YP  YP Y88888P                         
 
 
-Copyright <C> 2025. Aiden Gaul. All rights reserved.
+Site designed and developed by Aiden Gaul.
 
 
 `

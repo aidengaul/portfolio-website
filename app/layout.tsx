@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={vt323.className}>
       <body
-        className="bg-[#138486]"
+        className="bg-[#138486] min-h-screen min-w-screen"
       >
         {children}
       </body>
