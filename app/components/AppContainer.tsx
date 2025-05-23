@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import CloseButton from "./CloseButton";
 
 interface AppContainerProps {
@@ -7,6 +8,7 @@ interface AppContainerProps {
     headerColor?: string;
     headerTextColor?: string;
     closeButton?: boolean;
+    closeFunction?: Dispatch<SetStateAction<boolean>>;
   }
 
 export default function AppContainer({
@@ -16,6 +18,7 @@ export default function AppContainer({
   headerColor = "",
   headerTextColor = "text-black",
   closeButton = false,
+  closeFunction = () => {}
 }: Readonly<AppContainerProps>) {
   return (
     <div>
@@ -28,7 +31,10 @@ export default function AppContainer({
                             <div className={`${headerColor} flex flex-row items-center`}>
                               <p className={`${headerTextColor} text-3xl pl-2 py-2 mr-auto`}>{headerText}</p>
                               {
-                                closeButton && <CloseButton />
+                                closeButton && 
+                                <button onClick={() => closeFunction(false)}>
+                                  <CloseButton />
+                                </button>
                               }
                             </div>
                             
