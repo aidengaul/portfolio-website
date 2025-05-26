@@ -1,13 +1,8 @@
-export default function Resume() {
+export default function PersonalWebsite() {
     return (
         <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">Aiden Gaul</h1>
-            <p>
-                813-527-4176 | 
-                agaul7113@gmail.com | 
-                <a href="https://linkedin.com/in/aiden-gaul/" target="_blank" className="hover:text-blue-400"> linkedin.com/in/aiden-gaul/</a> | 
-                <a href="https://github.com/aidengaul" target="_blank" className="hover:text-blue-400"> github.com/aidengaul</a> 
-                </p>
+            <p>813-527-4176 | agaul7113@gmail.com | linkedin.com/in/aiden-gaul/ | github.com/aidengaul</p>
             <br />
 
             <h2 className="text-3xl">Education</h2>
@@ -110,7 +105,7 @@ export default function Resume() {
                 <p className="text-2xl">Code-Sparks | React.js, JavaScript, Strapi, Docker</p>
                 <p className="ml-auto">Aug. 2023 – Dec. 2023</p>
             </div>
-            <ul className="list-disc pl-5">
+            <ul>
                 <li>Enabled the upload of block-based code to a remote compiler for execution on a connected Arduino device</li>
                 <li>Collaborated with an Agile team to create a full-stack application introducing computing concepts to students</li>
                 <li>Designed a dynamic React frontend to allow teachers to create and share custom Blockly code blocks with students</li>

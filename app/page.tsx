@@ -18,7 +18,7 @@ export default function Page() {
   } = useWindowManager();
 
   return (
-    <div className="z-10">
+    <div className="relative w-full h-full">
       <div className="z-20 absolute left-96 top-36">
         {
           showFileExplorerWindow && (
@@ -32,22 +32,26 @@ export default function Page() {
         }
       </div>
 
-      <div className="z-40 h-full w-full">
-        {showTextFileWindow && (
-        <TextFileWindow
-          setShowTextFileWindow={setShowTextFileWindow}
-          fileName={textFileName}
-        />
-        )}
+      <div className="z-30 absolute left-128 top-48">
+        {
+          showConfirmationWindow && (
+            <ConfirmationWindow
+              setShowConfirmationWindow={setShowConfirmationWindow}
+              url={confirmationWindowURL}
+            />
+          )
+        }
       </div>
-      
-      <div className="z-40 absolute left-128 top-48">
-        {showConfirmationWindow && (
-          <ConfirmationWindow
-            setShowConfirmationWindow={setShowConfirmationWindow}
-            url={confirmationWindowURL}
+
+      <div className="h-full w-full z-40 absolute left-0 top-0">
+        {
+        showTextFileWindow && (
+          <TextFileWindow
+            setShowTextFileWindow={setShowTextFileWindow}
+            fileName={textFileName}
           />
-        )}
+          )
+        }
       </div>
     </div>
   );

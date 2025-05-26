@@ -32,7 +32,7 @@ export default function DesktopIcons() {
                 alt="Text File Icon"
                 width={85}
                 height={100}
-                onClick={() => openTextFileWindow("resume")} 
+                onClick={() => openTextFileWindow("resume.txt")} 
             />
             <p className="text-white text-xl">resume.txt</p>
         </div>
