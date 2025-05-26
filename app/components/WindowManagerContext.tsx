@@ -12,6 +12,8 @@ interface WindowManagerContextType {
   setConfirmationWindowURL: Dispatch<SetStateAction<string>>;
   showFileExplorerWindow: boolean;
   setShowFileExplorerWindow: Dispatch<SetStateAction<boolean>>;
+  showConsoleWindow: boolean;
+  setShowConsoleWindow: Dispatch<SetStateAction<boolean>>;
 }
 
 const WindowManagerContext = createContext<WindowManagerContextType | undefined>(undefined);
@@ -22,6 +24,7 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const [confirmationWindowURL, setConfirmationWindowURL] = useState("");
   const [showFileExplorerWindow, setShowFileExplorerWindow] = useState(false);
+  const [showConsoleWindow, setShowConsoleWindow] = useState(true);
 
   return (
     <WindowManagerContext.Provider
@@ -35,7 +38,9 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
         confirmationWindowURL,
         setConfirmationWindowURL,
         showFileExplorerWindow, 
-        setShowFileExplorerWindow
+        setShowFileExplorerWindow,
+        showConsoleWindow,
+        setShowConsoleWindow
       }}
     >
       {children}

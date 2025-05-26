@@ -248,7 +248,9 @@ const COMMANDS: Record<string, string> = {
   open: ``,
 };
 
-export default function ConsoleWindow() {
+export default function ConsoleWindow({setShowConsoleWindow}: {
+  setShowConsoleWindow: React.Dispatch<React.SetStateAction<boolean>>
+}) {
   const [input, setInput] = useState("");
   const [lines, setLines] = useState<string[]>([messageStart]);
   const [currDir, setCurrDir] = useState<DirectoryNode>(fileSystem);
@@ -280,8 +282,8 @@ export default function ConsoleWindow() {
   }, [lines]);
 
   return (
-    <div className="ml-48 mt-24">
-      <AppContainer header={true} headerText="Console">
+    <div className="">
+      <AppContainer header={true} headerText="Console" closeButton={true} closeFunction={setShowConsoleWindow}>
         <div className="bg-[#012456] w-256 h-128 text-white text-xl p-4 overflow-auto">
           <div className={`whitespace-pre-wrap ${vt323.className}`}>
             {lines.map((line, idx) => (

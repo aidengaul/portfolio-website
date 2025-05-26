@@ -3,23 +3,39 @@ import { useWindowManager } from "./components/WindowManagerContext";
 import TextFileWindow from "./components/TextFileWindow";
 import ConfirmationWindow from "./components/ConfirmationWindow";
 import FileExplorerWindow from "./components/FileExplorerWindow";
+import { useState } from "react";
+import ConsoleWindow from "./components/ConsoleWindow";
 
 export default function Page() {
+  const [windowStack, setWindowStack] = useState<string[]>([""]);
   const {
     showTextFileWindow,
     textFileName,
     showConfirmationWindow,
     confirmationWindowURL,
     showFileExplorerWindow,
+    showConsoleWindow,
     setShowConfirmationWindow,
     setShowTextFileWindow,
     setTextFileName,
-    setShowFileExplorerWindow
+    setShowFileExplorerWindow,
+    setShowConsoleWindow,
   } = useWindowManager();
+
+  function bringToFront(windowName: string) {
+    setWindowStack((prevStack) => {
+      // Remove the window if it already exists in the stack
+      const newStack = prevStack.filter((name) => name !== windowName);
+      // Add the window to the top of the stack
+      newStack.push(windowName);
+      return newStack;
+    });
+  }
 
   return (
     <div className="relative w-full h-full">
-      <div className="z-20 absolute left-96 top-36">
+      <div className={`absolute left-96 top-36`} style={{ zIndex: 100 + windowStack.indexOf("fileexplorer") }}
+        onClick={() => bringToFront("fileexplorer")}>
         {
           showFileExplorerWindow && (
             <FileExplorerWindow
@@ -32,7 +48,18 @@ export default function Page() {
         }
       </div>
 
-      <div className="z-30 absolute left-128 top-48">
+      <div className={`absolute left-84 top-36`} style={{ zIndex: 100 + windowStack.indexOf("console") }}
+        onClick={() => bringToFront("console")}>
+          {
+            showConsoleWindow && (
+              <ConsoleWindow 
+                setShowConsoleWindow={setShowConsoleWindow}
+              />
+            )
+          }
+      </div>
+
+      <div className={`z-105 absolute left-128 top-48`}>
         {
           showConfirmationWindow && (
             <ConfirmationWindow
@@ -43,7 +70,8 @@ export default function Page() {
         }
       </div>
 
-      <div className="h-full w-full z-40 absolute left-0 top-0">
+      <div className={`z-110 h-full w-full z-40 absolute left-0 top-0`}
+        onClick={() => bringToFront("textfile")}>
         {
         showTextFileWindow && (
           <TextFileWindow

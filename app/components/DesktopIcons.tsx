@@ -7,7 +7,8 @@ export default function DesktopIcons() {
     setTextFileName, 
     setShowConfirmationWindow, 
     setConfirmationWindowURL,
-    setShowFileExplorerWindow } = useWindowManager();
+    setShowFileExplorerWindow,
+    setShowConsoleWindow } = useWindowManager();
 
   const handleImageClick = (url: string) => {
     console.log(`Opening URL: ${url}`);
@@ -62,6 +63,14 @@ export default function DesktopIcons() {
             className="hover:cursor-pointer"
             onClick={() => handleImageClick("https://www.github.com/aidengaul/")} 
         />
+        <Image
+            src="/shell.png"
+            alt="Open Shell"
+            width={100}
+            height={100}
+            className="hover:cursor-pointer"
+            onClick={() => setShowConsoleWindow(true)}
+          />
     </div>
   );
 }

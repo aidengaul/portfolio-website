@@ -22,7 +22,7 @@ export default function RootLayout({
         <WindowManagerProvider>
           <DesktopIcons />
           <main className="absolute left-0 top-0 z-10">{children}</main>
-          <ConsoleWindow />
+          {/* <ConsoleWindow /> */}
         </WindowManagerProvider>
       </body>
     </html>
