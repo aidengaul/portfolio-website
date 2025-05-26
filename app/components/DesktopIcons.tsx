@@ -26,7 +26,7 @@ export default function DesktopIcons() {
 
   return (
     <div className="flex flex-col min-h-full items-center m-8 gap-8">
-        <div className="flex flex-col gap-1 items-center w-[128px]">
+        <div className="flex flex-col gap-1 items-center w-[128px] hover:cursor-pointer">
             <Image
                 src="/txt_file.png"
                 alt="Text File Icon"
@@ -36,7 +36,7 @@ export default function DesktopIcons() {
             />
             <p className="text-white text-xl">resume.txt</p>
         </div>
-        <div className="flex flex-col gap-2 items-center">
+        <div className="flex flex-col gap-2 items-center hover:cursor-pointer">
             <Image
                 src="/folder.png"
                 alt="Folder Icon"
@@ -51,7 +51,7 @@ export default function DesktopIcons() {
             alt="LinkedIn Link"
             width={100}
             height={100}
-            className="mb-2"
+            className="mb-2 hover:cursor-pointer"
             onClick={() => handleImageClick("https://www.linkedin.com/in/aiden-gaul/")} 
         />
         <Image
@@ -59,6 +59,7 @@ export default function DesktopIcons() {
             alt="GitHub Link"
             width={100}
             height={100}
+            className="hover:cursor-pointer"
             onClick={() => handleImageClick("https://www.github.com/aidengaul/")} 
         />
     </div>

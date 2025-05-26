@@ -34,7 +34,8 @@ function FileExplorerComponent({
                 {
                     files.map((fileName) => (
                         <div key={fileName} 
-                            className="flex flex-col gap-1 items-center w-40 p-4 hover:bg-blue-100 hover:border-blue-500">
+                            className="flex flex-col gap-1 items-center w-40 p-4 hover:bg-blue-100 
+                                hover:border-blue-500 border-1 border-transparent hover:border-1 hover:cursor-pointer">
                             <img
                                 src="/txt_file.png"
                                 alt="Text File Icon"
