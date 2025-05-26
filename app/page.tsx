@@ -7,7 +7,6 @@ import { useState } from "react";
 import ConsoleWindow from "./components/ConsoleWindow";
 
 export default function Page() {
-  const [windowStack, setWindowStack] = useState<string[]>([""]);
   const {
     showTextFileWindow,
     textFileName,
@@ -15,22 +14,15 @@ export default function Page() {
     confirmationWindowURL,
     showFileExplorerWindow,
     showConsoleWindow,
+    windowStack,
     setShowConfirmationWindow,
     setShowTextFileWindow,
     setTextFileName,
     setShowFileExplorerWindow,
     setShowConsoleWindow,
+    setWindowStack,
+    bringToFront
   } = useWindowManager();
-
-  function bringToFront(windowName: string) {
-    setWindowStack((prevStack) => {
-      // Remove the window if it already exists in the stack
-      const newStack = prevStack.filter((name) => name !== windowName);
-      // Add the window to the top of the stack
-      newStack.push(windowName);
-      return newStack;
-    });
-  }
 
   return (
     <div className="relative w-full h-full">
@@ -70,8 +62,7 @@ export default function Page() {
         }
       </div>
 
-      <div className={`z-110 h-full w-full z-40 absolute left-0 top-0`}
-        onClick={() => bringToFront("textfile")}>
+      <div className={`z-110 h-full w-full z-40 absolute left-0 top-0`}>
         {
         showTextFileWindow && (
           <TextFileWindow

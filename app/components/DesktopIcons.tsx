@@ -3,27 +3,32 @@ import Image from "next/image";
 import { useWindowManager } from "./WindowManagerContext";
 
 export default function DesktopIcons() {
-  const { setShowTextFileWindow, 
-    setTextFileName, 
-    setShowConfirmationWindow, 
-    setConfirmationWindowURL,
-    setShowFileExplorerWindow,
-    setShowConsoleWindow } = useWindowManager();
-
-  const handleImageClick = (url: string) => {
-    console.log(`Opening URL: ${url}`);
-    setConfirmationWindowURL(url);
-    setShowConfirmationWindow(true);
-  };
+  const {
+  setShowTextFileWindow,
+  setTextFileName,
+  setShowConfirmationWindow,
+  setConfirmationWindowURL,
+  setShowFileExplorerWindow,
+  setShowConsoleWindow,
+  openWindow  } = useWindowManager();
 
   const openTextFileWindow = (fileName: string) => {
     setTextFileName(fileName);
-    setShowTextFileWindow(true);
-  }
+    openWindow("textfile", setShowTextFileWindow);
+  };
 
   const openFileExplorerWindow = () => {
-    setShowFileExplorerWindow(true);
-  }
+    openWindow("fileexplorer", setShowFileExplorerWindow);
+  };
+
+  const openConsoleWindow = () => {
+    openWindow("console", setShowConsoleWindow);
+  };
+
+  const handleImageClick = (url: string) => {
+    setConfirmationWindowURL(url);
+    openWindow("confirmation", setShowConfirmationWindow);
+  };
 
   return (
     <div className="flex flex-col min-h-full items-center m-8 gap-8">
@@ -69,7 +74,7 @@ export default function DesktopIcons() {
             width={100}
             height={100}
             className="hover:cursor-pointer"
-            onClick={() => setShowConsoleWindow(true)}
+            onClick={() => openConsoleWindow()}
           />
     </div>
   );

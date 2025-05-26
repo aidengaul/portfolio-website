@@ -14,6 +14,10 @@ interface WindowManagerContextType {
   setShowFileExplorerWindow: Dispatch<SetStateAction<boolean>>;
   showConsoleWindow: boolean;
   setShowConsoleWindow: Dispatch<SetStateAction<boolean>>;
+  windowStack: string[];
+  setWindowStack: Dispatch<SetStateAction<string[]>>;
+  bringToFront: (id: string) => void;
+  openWindow: (id: string, openFn: Dispatch<SetStateAction<boolean>>) => void;
 }
 
 const WindowManagerContext = createContext<WindowManagerContextType | undefined>(undefined);
@@ -25,6 +29,19 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
   const [confirmationWindowURL, setConfirmationWindowURL] = useState("");
   const [showFileExplorerWindow, setShowFileExplorerWindow] = useState(false);
   const [showConsoleWindow, setShowConsoleWindow] = useState(true);
+  const [windowStack, setWindowStack] = useState<string[]>([]);
+
+  function bringToFront(id: string) {
+  setWindowStack((prev) => {
+    const filtered = prev.filter((w) => w !== id);
+    return [...filtered, id];
+  });
+}
+
+function openWindow(id: string, openFn: Dispatch<SetStateAction<boolean>>) {
+  openFn(true);
+  bringToFront(id);
+}
 
   return (
     <WindowManagerContext.Provider
@@ -37,10 +54,14 @@ export function WindowManagerProvider({ children }: { children: React.ReactNode 
         setShowConfirmationWindow,
         confirmationWindowURL,
         setConfirmationWindowURL,
-        showFileExplorerWindow, 
+        showFileExplorerWindow,
         setShowFileExplorerWindow,
         showConsoleWindow,
-        setShowConsoleWindow
+        setShowConsoleWindow,
+        windowStack,
+        setWindowStack,
+        bringToFront,
+        openWindow
       }}
     >
       {children}
@@ -53,3 +74,4 @@ export function useWindowManager() {
   if (!context) throw new Error("useWindowManager must be used within a WindowManagerProvider");
   return context;
 }
+
