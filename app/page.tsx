@@ -1,72 +1,54 @@
 "use client";
-import Image from "next/image";
-import ConsoleWindow from "./components/ConsoleWindow";
-import ConfirmationWindow from "./components/ConfirmationWindow";
-import { useState } from "react";
+import { useWindowManager } from "./components/WindowManagerContext";
 import TextFileWindow from "./components/TextFileWindow";
+import ConfirmationWindow from "./components/ConfirmationWindow";
+import FileExplorerWindow from "./components/FileExplorerWindow";
 
 export default function Page() {
-  const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
-  const [confirmationWindowURL, setConfirmationWindowURL] = useState("");
-  const [showTextFileWindow, setShowTextFileWindow] = useState(false);
-  const [textFileName, setTextFileName] = useState("");
-
-  const handleImageClick = (url: string) => {
-    setConfirmationWindowURL(url);
-    setShowConfirmationWindow(true);
-  };
-
-  const openTextFileWindow = (fileName: string) => {
-    setTextFileName(fileName);
-    setShowTextFileWindow(true);
-  }
+  const {
+    showTextFileWindow,
+    textFileName,
+    showConfirmationWindow,
+    confirmationWindowURL,
+    showFileExplorerWindow,
+    setShowConfirmationWindow,
+    setShowTextFileWindow,
+    setTextFileName,
+    setShowFileExplorerWindow
+  } = useWindowManager();
 
   return (
-    <div className={`flex`}>
-      {
-        showTextFileWindow ? 
+    <div className="z-10">
+      <div className="z-20 absolute left-96 top-36">
+        {
+          showFileExplorerWindow && (
+            <FileExplorerWindow
+              setShowFileExplorerWindow={setShowFileExplorerWindow}
+              setShowTextFileWindow={setShowTextFileWindow}
+              setTextFileName={setTextFileName}
+              fileName={textFileName}
+            />
+          )
+        }
+      </div>
 
-        <TextFileWindow setShowTextFileWindow={setShowTextFileWindow} fileName={textFileName}/> :
-
-        <>
-          <div className="flex flex-col min-h-full items-center m-8 gap-8">
-            <div className="flex flex-col gap-1 items-center w-[128px]">
-              <Image
-                src="/txt_file.png"
-                alt="Text File Icon"
-                width={85}
-                height={100}
-                onClick={() => openTextFileWindow("resume")} />
-              <p className="text-white text-xl">resume.txt</p>
-            </div>
-            <div className="flex flex-col gap-2 items-center">
-              <Image
-                src="/folder.png"
-                alt="Folder Icon"
-                width={100}
-                height={100} />
-              <p className="text-white text-xl">projects</p>
-            </div>
-            <Image
-              src="/linkedin.webp"
-              alt="LinkedIn Link"
-              width={100}
-              height={100}
-              className="mb-2"
-              onClick={() => handleImageClick("https://www.linkedin.com/in/aiden-gaul/")} />
-            <Image
-              src="/github.png"
-              alt="GitHub Link"
-              width={100}
-              height={100}
-              onClick={() => handleImageClick("https://www.github.com/aidengaul/")} />
-          </div>
-            <ConsoleWindow />
-            {
-              showConfirmationWindow && <ConfirmationWindow setShowConfirmationWindow={setShowConfirmationWindow} url={confirmationWindowURL} />
-            }
-        </>
-    }
+      <div className="z-40 h-full w-full">
+        {showTextFileWindow && (
+        <TextFileWindow
+          setShowTextFileWindow={setShowTextFileWindow}
+          fileName={textFileName}
+        />
+        )}
+      </div>
+      
+      <div className="z-40 absolute left-128 top-48">
+        {showConfirmationWindow && (
+          <ConfirmationWindow
+            setShowConfirmationWindow={setShowConfirmationWindow}
+            url={confirmationWindowURL}
+          />
+        )}
+      </div>
     </div>
   );
 }

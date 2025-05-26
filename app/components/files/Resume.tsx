@@ -105,7 +105,7 @@ export default function Resume() {
                 <p className="text-2xl">Code-Sparks | React.js, JavaScript, Strapi, Docker</p>
                 <p className="ml-auto">Aug. 2023 – Dec. 2023</p>
             </div>
-            <ul>
+            <ul className="list-disc pl-5">
                 <li>Enabled the upload of block-based code to a remote compiler for execution on a connected Arduino device</li>
                 <li>Collaborated with an Agile team to create a full-stack application introducing computing concepts to students</li>
                 <li>Designed a dynamic React frontend to allow teachers to create and share custom Blockly code blocks with students</li>

@@ -1,5 +1,8 @@
+"use client";
 import { VT323 } from "next/font/google";
 import "./globals.css";
+import DesktopIcons from "./components/DesktopIcons";
+import { WindowManagerProvider, useWindowManager } from "./components/WindowManagerContext";
 
 export const vt323 = VT323({
   weight: "400",
@@ -14,10 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={vt323.className}>
-      <body
-        className="bg-[#138486] min-h-screen min-w-screen"
-      >
-        {children}
+      <body className="bg-[#138486] min-h-screen min-w-screen flex">
+        <WindowManagerProvider>
+          <DesktopIcons />
+          <main className="absolute left-0 top-0 z-10">{children}</main>
+        </WindowManagerProvider>
       </body>
     </html>
   );

@@ -32,7 +32,7 @@ export default function ConfirmationWindow({
   setShowConfirmationWindow
 }: Readonly<ConfirmationWindowProps>) {
   return (
-    <div className="ml-[-800px] mt-48">
+    <div className="">
         <AppContainer header={true} headerColor={"bg-[#012456]"} headerText={"Navigate to External Link"} 
             headerTextColor={"text-white"} closeButton={true} closeFunction={setShowConfirmationWindow} 
             children={<ConfirmationWindowComponent setShowConfirmationWindow={setShowConfirmationWindow} url={url}/>}/>
