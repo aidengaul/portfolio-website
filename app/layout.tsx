@@ -3,7 +3,6 @@ import { vt323 } from "./components/Font";
 import "./globals.css";
 import DesktopIcons from "./components/DesktopIcons";
 import { WindowManagerProvider, useWindowManager } from "./components/WindowManagerContext";
-import ConsoleWindow from "./components/ConsoleWindow";
 
 export default function RootLayout({
   children,
@@ -16,7 +15,6 @@ export default function RootLayout({
         <WindowManagerProvider>
           <DesktopIcons />
           <main className="absolute left-0 top-0 z-10">{children}</main>
-          {/* <ConsoleWindow /> */}
         </WindowManagerProvider>
       </body>
     </html>

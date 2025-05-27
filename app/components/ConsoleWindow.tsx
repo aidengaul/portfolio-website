@@ -81,7 +81,7 @@ type HandleCommandArgs = {
   command: string;
   currDir: DirectoryNode;
   path: string[];
-  enqueueLines: (lines: string[]) => void;
+  enqueueLines: (lines: string[] | React.ReactNode[]) => void;
   setInput: React.Dispatch<React.SetStateAction<string>>;
   setCurrDir: React.Dispatch<React.SetStateAction<DirectoryNode>>;
   setPath: React.Dispatch<React.SetStateAction<string[]>>;
@@ -163,6 +163,45 @@ function handleCommand({
     return;
   }
 
+  if (base === "contacts") {
+    enqueueLines([`> ${trimmed}`, "\n"]);
+    enqueueLines([
+      "",
+      <div key="lnk" className="pl-4">
+        LinkedIn:{" "}
+        <a
+          href="https://www.linkedin.com/in/aiden-gaul/"
+          target="_blank"
+          className="underline hover:text-blue-300"
+        >
+          https://www.linkedin.com/in/aiden-gaul/
+        </a>
+      </div>,
+      <div key="gh" className="pl-4">
+        GitHub:{" "}
+        <a
+          href="https://www.github.com/aidengaul"
+          target="_blank"
+          className="underline hover:text-blue-300"
+        >
+          https://www.github.com/aidengaul
+        </a>
+      </div>,
+      <div key="em" className="pl-4">
+        Email:{" "}
+        <a
+          href="mailto:agaul7113@gmail.com"
+          className="underline hover:text-blue-300"
+        >
+          agaul7113@gmail.com
+        </a>
+      </div>,
+    ]);
+    enqueueLines([``, "\n"]);
+    setInput("");
+    return;
+  }
+
   if (["help", "about", "contacts"].includes(base)) {
     const resp = COMMANDS[base];
     enqueueLines([`> ${trimmed}`, ...resp.split("\n")]);
@@ -198,6 +237,7 @@ const COMMANDS: Record<string, string> = {
   `,
 
   about: `
+  \n
   My name is:
   \n
    .d8b.  d888888b d8888b. d88888b d8b   db 
@@ -228,13 +268,6 @@ const COMMANDS: Record<string, string> = {
   analytics and finding creative ways to present insights in a more digestible way.
   `,
 
-  contacts: `
-  \n
-  You can find me on LinkedIn at: https://www.linkedin.com/in/aiden-gaul/
-  You can also find me on GitHub at: https://www.github.com/aiden-gaul
-  Or, you can email me at: agaul7113@gmail.com
-  `,
-
   clear: "clear",
 
   open: ``,
@@ -244,8 +277,8 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
   setShowConsoleWindow: React.Dispatch<React.SetStateAction<boolean>>
 }) {
   const [input, setInput] = useState("");
-  const [lines, setLines] = useState<string[]>([messageStart]);
-  const [typingQueue, setTypingQueue] = useState<string[]>([]);
+  const [lines, setLines] = useState<React.ReactNode[]>([<pre key="start" className={vt323.className}>{messageStart}</pre>]);
+  const [typingQueue, setTypingQueue] = useState<React.ReactNode[]>([]);  
   const [currDir, setCurrDir] = useState<DirectoryNode>(fileSystem);
   const [path, setPath] = useState<string[]>([]); // breadcrumb path
   const bottomRef = useRef<HTMLDivElement | null>(null);
@@ -255,9 +288,9 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
     setTextFileName } = useWindowManager();
 
   // enqueue for typing
-  function enqueueLines(newLines: string[]) {
-    setTypingQueue((prev) => [...prev, ...newLines]);
-  }
+  function enqueueLines(newLines: React.ReactNode[]) {
+  setTypingQueue((prev) => [...prev, ...newLines]);
+}
 
   // handle Enter
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -296,8 +329,8 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
       <AppContainer header={true} headerText="Console" closeButton={true} closeFunction={setShowConsoleWindow}>
         <div className="bg-[#012456] w-256 h-128 text-white text-xl p-4 overflow-auto" onClick={() => textInput.current?.focus()}>
           <div className={`whitespace-pre-wrap ${vt323.className}`}>
-            {lines.map((line, idx) => (
-              <div key={idx}>{line}</div>
+            {lines.map((node, idx) => (
+              <div key={idx}>{node}</div>
             ))}
             <div ref={bottomRef} />
           </div>
