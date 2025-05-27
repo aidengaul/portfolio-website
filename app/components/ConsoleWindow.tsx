@@ -7,7 +7,6 @@ import { useWindowManager } from "./WindowManagerContext";
 type FileNode = {
   type: "file";
   name: string;
-  content?: string; // optional for "open" command
 };
 
 type DirectoryNode = {
@@ -22,12 +21,12 @@ const fileSystem: DirectoryNode = {
   type: "directory",
   name: "/",
   children: [
-    { type: "file", name: "resume.txt", content: "This is my resume." },
+    { type: "file", name: "resume.txt"},
     {
       type: "directory",
       name: "projects",
       children: [
-        { type: "file", name: "personal-website.txt", content: "My website" },
+        { type: "file", name: "personal-website.txt"},
         { type: "file", name: "learn-os.txt" },
         { type: "file", name: "multiclass-image-classification.txt" },
         { type: "file", name: "peer-to-peer-file-sharing.txt" },
@@ -106,7 +105,7 @@ function handleCommand({
 
   if (base === "clear") {
     setLines([<pre key="start" className={vt323.className}>{messageStart}</pre>])
-    enqueueLines([]); // clear queue
+    enqueueLines([]); 
     setInput("");
     return;
   }
@@ -137,16 +136,16 @@ function handleCommand({
     if (!arg) {
       setCurrDir(fileSystem);
       setPath([]);
-      enqueueLines([`> ${trimmed}`, `Now in / (root)`]);
+      enqueueLines([`> ${trimmed}`, "\n  Current directory is now /. Try `ls` to see files.\n\n"]);
     } else {
       const p = normalizePath(arg, path);
       const d = findDir(p);
       if (d) {
         setCurrDir(d);
         setPath(p);
-        enqueueLines([`> ${trimmed}`, `Now in /${p.join("/") || ""}`]);
+        enqueueLines([`> ${trimmed}`, `\n  Current directory is now /${p.join("/") || ""}. Try \`ls\` to see files.\n\n`]);
       } else {
-        enqueueLines([`> ${trimmed}`, `Directory not found: ${arg}`]);
+        enqueueLines([`> ${trimmed}`, `\n  Directory not found: ${arg}\n\n`]);
       }
     }
     setInput("");
@@ -161,8 +160,9 @@ function handleCommand({
       enqueueLines([`> ${trimmed}`, `\n  Opening file: ${file.name}\n\n`]);
       setTextFileName(file.name);
       setShowTextFileWindow(true);
-    } else {
-      enqueueLines([`> ${trimmed}`, `File not found: ${arg}`]);
+    } 
+    else {
+      enqueueLines([`> ${trimmed}`, `\n  File not found: ${arg}\n\n`]);
     }
     setInput("");
     return;
@@ -215,7 +215,7 @@ function handleCommand({
   }
 
   // fallback
-  enqueueLines([`> ${trimmed}`, `Command not found: ${trimmed}`]);
+  enqueueLines([`> ${trimmed}`, `\n  Command not found: ${trimmed}\n\n`]);
   setInput("");
 }
 
