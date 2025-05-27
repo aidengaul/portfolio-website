@@ -4,6 +4,9 @@ import TextFileWindow from "./components/TextFileWindow";
 import ConfirmationWindow from "./components/ConfirmationWindow";
 import FileExplorerWindow from "./components/FileExplorerWindow";
 import ConsoleWindow from "./components/ConsoleWindow";
+import AppContainer from "./components/AppContainer";
+import NoticeWindow from "./components/NoticeWindow";
+import { useState } from "react";
 
 export default function Page() {
   const {
@@ -22,9 +25,12 @@ export default function Page() {
     setWindowStack,
     bringToFront
   } = useWindowManager();
+  const [showNoticeWindow, setShowNoticeWindow] = useState(true);
 
   return (
     <div className="relative w-full h-full">
+      {showNoticeWindow && <NoticeWindow setShowNoticeWindow={setShowNoticeWindow}/>}
+      
       <div className={`absolute left-96 top-48`} style={{ zIndex: 100 + windowStack.indexOf("fileexplorer") }}
         onClick={() => bringToFront("fileexplorer")}>
         {

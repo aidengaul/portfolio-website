@@ -34,7 +34,7 @@ export default function AppContainer({
                     {headerText}
                   </p>
                   {closeButton && (
-                    <button onClick={() => closeFunction(false)}>
+                    <button onClick={() => closeFunction(false)} className="hover:cursor-pointer">
                       <CloseButton />
                     </button>
                   )}
