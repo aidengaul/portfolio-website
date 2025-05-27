@@ -3,8 +3,8 @@ export default function LearnOS() {
         <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">LearnOS</h1>
             <p>
-                <a href="" target="_blank" className="hover:text-blue-400">Github Link</a> | 
-                <a href="" target="_blank" className="hover:text-blue-400"> Figma Design Files</a> | 
+                <a href="https://github.com/calebnavarro2003/SeniorProject" target="_blank" className="hover:text-blue-400">Github Link</a> | 
+                <a href="https://www.figma.com/design/QHbpJG5rj2giLI8POto5Az/LearnOS?node-id=0-1&t=44GwTtwSZcXxnjcv-1" target="_blank" className="hover:text-blue-400"> Figma Design Files</a> | 
                 <a href="https://oslearn.app/" target="_blank" className="hover:text-blue-400"> https://oslearn.app/</a>
             </p>
             <br />

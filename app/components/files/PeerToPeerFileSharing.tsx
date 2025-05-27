@@ -3,7 +3,7 @@ export default function PeerToPeerFileSharing() {
         <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">Peer to Peer File Sharing Application</h1>
             <p>
-                <a href="" target="_blank" className="hover:text-blue-400">Github Link</a>
+                <a href="https://github.com/CollinQuigley/cntproject" target="_blank" className="hover:text-blue-400">Github Link</a>
             </p>
             <br />
 

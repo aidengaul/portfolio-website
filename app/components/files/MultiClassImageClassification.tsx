@@ -3,7 +3,7 @@ export default function MultiClassImageClassification() {
        <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">Multi Class Image Classification Model</h1>
             <p>
-                <a href="" target="_blank" className="hover:text-blue-400">Jupyter Link (Google Drive)</a>
+                <a href="https://drive.google.com/file/d/1i5zK8WRzUBYvwC2dE4fqmaFu3xNjMuU7/view?usp=drive_link" target="_blank" className="hover:text-blue-400">Jupyter Link (Google Drive)</a>
             </p>
             <br />
 

@@ -3,8 +3,8 @@ export default function PersonalWebsite() {
         <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">Personal Portfolio Website</h1>
             <p>
-                <a href="" target="_blank" className="hover:text-blue-400">Github Link</a> | 
-                <a href="" target="_blank" className="hover:text-blue-400"> Figma Design Files</a>
+                <a href="https://github.com/aidengaul/portfolio-website" target="_blank" className="hover:text-blue-400">Github Link</a> | 
+                <a href="https://www.figma.com/design/z3fxlEhm0UPES3iB387Pyb/Portfolio-Project?node-id=0-1&t=t9OicYBCGnkx1b3n-1" target="_blank" className="hover:text-blue-400"> Figma Design Files</a>
             </p>
             <br />
 
