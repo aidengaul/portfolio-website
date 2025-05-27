@@ -50,12 +50,11 @@ function findDir(pathSegments: string[]): DirectoryNode | null {
   return node;
 }
 
-function ls(dir: DirectoryNode): string {
-  const lines = dir.children.map((child) =>
+function ls(dir: DirectoryNode): string[] {
+  return dir.children.map((child) =>
     child.type === "file" ? `  ${child.name}` : `  ${child.name}/`
   );
 
-  return `\n${lines.join("\n")}\n`;
 }
 
 function normalizePath(inputPath: string, currentPath: string[]): string[] {
@@ -113,20 +112,23 @@ function handleCommand({
   }
 
   if (base === "ls") {
-    let contents: string;
+    let contents: string[];
     if (!arg || arg === ".") {
       contents = ls(currDir);
-    } else {
+    } 
+    else {
       const p = normalizePath(arg, path);
       const d = findDir(p);
       if (d) contents = ls(d);
       else {
-        enqueueLines([`> ${trimmed}`, `Directory not found: ${arg}`]);
+        enqueueLines([`> ${trimmed}`, `\n  Directory not found: ${arg}\n\n`]);
         setInput("");
         return;
       }
     }
-    enqueueLines([`> ${trimmed}`, ...contents]);
+    enqueueLines([`> ${trimmed}`, "\n"])
+    enqueueLines([``, ...contents]);
+    enqueueLines([``, "\n"])
     setInput("");
     return;
   }
@@ -231,9 +233,9 @@ Site designed and developed by Aiden Gaul.
 const COMMANDS: Record<string, string> = {
   help: `
   \n
-  ls - list files found in the current directory
-  cd - change directory to one found in the current directory
-  open - open a file in the current directory
+  ls <optional directory> - list files found in the current directory
+  cd <directory> - change directory to one found in the current directory
+  open <file name> - open a file in the current directory
   about - learn a little bit about me
   contacts - lists my contact information
   clear - clear the console
