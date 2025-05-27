@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import AppContainer from "./AppContainer";
-import { vt323 } from "../layout";
+import { vt323 } from "./Font";
 import { useWindowManager } from "./WindowManagerContext";
 
 type FileNode = {
@@ -81,7 +81,7 @@ type HandleCommandArgs = {
   command: string;
   currDir: DirectoryNode;
   path: string[];
-  setLines: React.Dispatch<React.SetStateAction<string[]>>;
+  enqueueLines: (lines: string[]) => void;
   setInput: React.Dispatch<React.SetStateAction<string>>;
   setCurrDir: React.Dispatch<React.SetStateAction<DirectoryNode>>;
   setPath: React.Dispatch<React.SetStateAction<string[]>>;
@@ -89,40 +89,41 @@ type HandleCommandArgs = {
   setShowTextFileWindow: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const handleCommand = ({
+function handleCommand({
   command,
   currDir,
   path,
-  setLines,
+  enqueueLines,
   setInput,
   setCurrDir,
   setPath,
   setTextFileName,
-  setShowTextFileWindow
-}: HandleCommandArgs) => {
-    const trimmed = command.trim();
-    const tokens = trimmed.split(" ");
-    const base = tokens[0];
-    const arg = tokens[1];
+  setShowTextFileWindow,
+}: HandleCommandArgs) {
+  const trimmed = command.trim();
+  const [base, arg] = trimmed.split(" ");
 
-    // handle ls command variants
-    if (base === "ls") {
-    let targetDir: DirectoryNode | null = null;
+  if (base === "clear") {
+    enqueueLines([]); // clear queue
+    setInput("");
+    return;
+  }
 
+  if (base === "ls") {
+    let contents: string;
     if (!arg || arg === ".") {
-      targetDir = currDir;
+      contents = ls(currDir);
     } else {
-      const cleanedPath = normalizePath(arg, path);
-      targetDir = findDir(cleanedPath);
+      const p = normalizePath(arg, path);
+      const d = findDir(p);
+      if (d) contents = ls(d);
+      else {
+        enqueueLines([`> ${trimmed}`, `Directory not found: ${arg}`]);
+        setInput("");
+        return;
+      }
     }
-
-    if (targetDir) {
-      const contents = ls(targetDir);
-      setLines((prev) => [...prev, `> ${trimmed}`, `${contents}\n`]);
-    } else {
-      setLines((prev) => [...prev, `> ${trimmed}`, `\n  Directory not found: ${arg}\n\n`]);
-    }
-
+    enqueueLines([`> ${trimmed}`, ...contents]);
     setInput("");
     return;
   }
@@ -131,59 +132,48 @@ const handleCommand = ({
     if (!arg) {
       setCurrDir(fileSystem);
       setPath([]);
-      setLines((prev) => [...prev, `> ${trimmed}`, `\n  Now in ${fileSystem.name}. Use \`ls\` to view files in this directory.\n\n`]);
-    }
-    else if (arg === ".") {
-      setLines((prev) => [...prev, `> ${trimmed}`, `\n  Now in /${path.join("/") || ""}. Use \`ls\` to view files in this directory.\n\n`]);
-    } 
-    else {
-      const cleanedPath = normalizePath(arg, path);
-      const newDir = findDir(cleanedPath);
-
-      if (newDir) {
-        setCurrDir(newDir);
-        setPath(cleanedPath);
-        setLines((prev) => [
-          ...prev,
-          `> ${trimmed}`,
-          `\n  Now in /${cleanedPath.join("/") || ""}. Use \`ls\` to view files in this directory.\n\n`,
-        ]);
+      enqueueLines([`> ${trimmed}`, `Now in / (root)`]);
+    } else {
+      const p = normalizePath(arg, path);
+      const d = findDir(p);
+      if (d) {
+        setCurrDir(d);
+        setPath(p);
+        enqueueLines([`> ${trimmed}`, `Now in /${p.join("/") || ""}`]);
       } else {
-        setLines((prev) => [...prev, `> ${trimmed}`, `\n  Directory not found: ${arg}\n\n`]);
+        enqueueLines([`> ${trimmed}`, `Directory not found: ${arg}`]);
       }
     }
-
     setInput("");
     return;
   }
 
   if (base === "open") {
     const file = currDir.children.find(
-      (child) => child.type === "file" && child.name === arg
+      (c) => c.type === "file" && c.name === arg
     ) as FileNode;
     if (file) {
-      setLines((prev) => [...prev, `> ${trimmed}`, `\n  Opening file: ${file.name}\n\n`]);
+      enqueueLines([`> ${trimmed}`, `\nOpening file: ${file.name}\n\n`]);
       setTextFileName(file.name);
       setShowTextFileWindow(true);
     } else {
-      setLines((prev) => [...prev, `> ${trimmed}`, `\n  File not found: ${arg}\n\n`]);
+      enqueueLines([`> ${trimmed}`, `File not found: ${arg}`]);
     }
     setInput("");
     return;
   }
 
-    // about, contacts, help
-    if (["about", "contacts", "help"].includes(base)) {
-      const response = COMMANDS[base];
-      setLines((prev) => [...prev, `> ${trimmed}`, response]);
-      setInput("");
-      return;
-    }
-
-    // Default fallback
-    setLines((prev) => [...prev, `> ${trimmed}`, `\n  Command not found: ${trimmed}\n\n`]);
+  if (["help", "about", "contacts"].includes(base)) {
+    const resp = COMMANDS[base];
+    enqueueLines([`> ${trimmed}`, ...resp.split("\n")]);
     setInput("");
-};
+    return;
+  }
+
+  // fallback
+  enqueueLines([`> ${trimmed}`, `Command not found: ${trimmed}`]);
+  setInput("");
+}
 
 const messageStart = `
 db   d8b   db d88888b db       .o88b.  .d88b.  .88b  d88. d88888b
@@ -198,6 +188,7 @@ Site designed and developed by Aiden Gaul.
 
 const COMMANDS: Record<string, string> = {
   help: `
+  \n
   ls - list files found in the current directory
   cd - change directory to one found in the current directory
   open - open a file in the current directory
@@ -208,7 +199,7 @@ const COMMANDS: Record<string, string> = {
 
   about: `
   My name is:
-
+  \n
    .d8b.  d888888b d8888b. d88888b d8b   db 
   d8' \`8b   \`88\'   88  \`8D 88'     888o  88 
   88ooo88    88    88   88 88ooooo 88V8o 88 
@@ -223,21 +214,22 @@ const COMMANDS: Record<string, string> = {
   88  ooo 88~~~88 88    88 88               
   88. ~8~ 88   88 88b  d88 88booo.          
    Y888P  YP   YP ~Y8888P' Y88888P
-
+  \n
   I graduated from the University of Florida in 2025 with a Bachelor of Science in   
   Computer Science Engineering and a minor in Statistics. 
-
+  \n
   I self taught myself how to code in middle school by following Youtube videos
   with the sole goal of being able to compete with bots buying up limited edition
   shoes that I wanted. Along the way, I fell in love with coding and the constant
   learning curve that I faced when trying to accomplish new things. 
-
+  \n
   These days, I spend more time designing and building web applications like this
   one instead of battling the newest antibots. I also have found a knack for data
   analytics and finding creative ways to present insights in a more digestible way.
   `,
 
   contacts: `
+  \n
   You can find me on LinkedIn at: https://www.linkedin.com/in/aiden-gaul/
   You can also find me on GitHub at: https://www.github.com/aiden-gaul
   Or, you can email me at: agaul7113@gmail.com
@@ -253,38 +245,56 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
 }) {
   const [input, setInput] = useState("");
   const [lines, setLines] = useState<string[]>([messageStart]);
+  const [typingQueue, setTypingQueue] = useState<string[]>([]);
   const [currDir, setCurrDir] = useState<DirectoryNode>(fileSystem);
   const [path, setPath] = useState<string[]>([]); // breadcrumb path
   const bottomRef = useRef<HTMLDivElement | null>(null);
+  const textInput = useRef<HTMLInputElement | null>(null);
 
   const { setShowTextFileWindow, 
     setTextFileName } = useWindowManager();
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  // enqueue for typing
+  function enqueueLines(newLines: string[]) {
+    setTypingQueue((prev) => [...prev, ...newLines]);
+  }
+
+  // handle Enter
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleCommand({
-      command: input,
-      currDir,
-      path,
-      setLines,
-      setInput,
-      setCurrDir,
-      setPath,
-      setTextFileName,
-      setShowTextFileWindow
-    });
+        command: input,
+        currDir,
+        path,
+        enqueueLines,
+        setInput,
+        setCurrDir,
+        setPath,
+        setTextFileName,
+        setShowTextFileWindow,
+      });
     }
   };
 
+  // typewriter effect
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (typingQueue.length === 0) return;
+    const t = setTimeout(() => {
+      setLines((prev) => [...prev, typingQueue[0]]);
+      setTypingQueue((q) => q.slice(1));
+    }, 50);
+    return () => clearTimeout(t);
+  }, [typingQueue]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "instant" });
   }, [lines]);
 
   return (
     <div className="">
       <AppContainer header={true} headerText="Console" closeButton={true} closeFunction={setShowConsoleWindow}>
-        <div className="bg-[#012456] w-256 h-128 text-white text-xl p-4 overflow-auto">
+        <div className="bg-[#012456] w-256 h-128 text-white text-xl p-4 overflow-auto" onClick={() => textInput.current?.focus()}>
           <div className={`whitespace-pre-wrap ${vt323.className}`}>
             {lines.map((line, idx) => (
               <div key={idx}>{line}</div>
@@ -295,8 +305,9 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
           <div className="flex items-center gap-2 mt-2">
             <span>{`/${path.join("/")}  >`}</span>
             <input
+              ref={textInput}
               type="text"
-              size={50}
+              size={100}
               className={`bg-transparent outline-none text-white ${vt323.className}`}
               value={input}
               onChange={(e) => setInput(e.target.value)}

@@ -1,15 +1,9 @@
 "use client";
-import { VT323 } from "next/font/google";
+import { vt323 } from "./components/Font";
 import "./globals.css";
 import DesktopIcons from "./components/DesktopIcons";
 import { WindowManagerProvider, useWindowManager } from "./components/WindowManagerContext";
 import ConsoleWindow from "./components/ConsoleWindow";
-
-export const vt323 = VT323({
-  weight: "400",
-  variable: "--font-vt323",
-  subsets: ["latin"],
-});
 
 export default function RootLayout({
   children,

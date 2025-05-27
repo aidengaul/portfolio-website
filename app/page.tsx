@@ -3,7 +3,6 @@ import { useWindowManager } from "./components/WindowManagerContext";
 import TextFileWindow from "./components/TextFileWindow";
 import ConfirmationWindow from "./components/ConfirmationWindow";
 import FileExplorerWindow from "./components/FileExplorerWindow";
-import { useState } from "react";
 import ConsoleWindow from "./components/ConsoleWindow";
 
 export default function Page() {
@@ -26,7 +25,7 @@ export default function Page() {
 
   return (
     <div className="relative w-full h-full">
-      <div className={`absolute left-96 top-36`} style={{ zIndex: 100 + windowStack.indexOf("fileexplorer") }}
+      <div className={`absolute left-96 top-48`} style={{ zIndex: 100 + windowStack.indexOf("fileexplorer") }}
         onClick={() => bringToFront("fileexplorer")}>
         {
           showFileExplorerWindow && (
@@ -40,7 +39,7 @@ export default function Page() {
         }
       </div>
 
-      <div className={`absolute left-84 top-36`} style={{ zIndex: 100 + windowStack.indexOf("console") }}
+      <div className={`absolute left-64 top-12`} style={{ zIndex: 100 + windowStack.indexOf("console") }}
         onClick={() => bringToFront("console")}>
           {
             showConsoleWindow && (
@@ -51,7 +50,7 @@ export default function Page() {
           }
       </div>
 
-      <div className={`z-105 absolute left-128 top-48`}>
+      <div className={`z-105 absolute left-128 top-64`}>
         {
           showConfirmationWindow && (
             <ConfirmationWindow
