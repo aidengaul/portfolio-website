@@ -3,6 +3,7 @@ import { vt323 } from "./components/Font";
 import "./globals.css";
 import DesktopIcons from "./components/DesktopIcons";
 import { WindowManagerProvider } from "./components/WindowManagerContext";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
   children,
@@ -16,6 +17,7 @@ export default function RootLayout({
           <DesktopIcons />
           <main className="absolute left-0 top-0 z-10">{children}</main>
         </WindowManagerProvider>
+        <Analytics />
       </body>
     </html>
   );
