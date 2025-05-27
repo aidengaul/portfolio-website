@@ -81,6 +81,7 @@ type HandleCommandArgs = {
   command: string;
   currDir: DirectoryNode;
   path: string[];
+  setLines: React.Dispatch<React.SetStateAction<React.ReactNode[]>>;
   enqueueLines: (lines: string[] | React.ReactNode[]) => void;
   setInput: React.Dispatch<React.SetStateAction<string>>;
   setCurrDir: React.Dispatch<React.SetStateAction<DirectoryNode>>;
@@ -93,6 +94,7 @@ function handleCommand({
   command,
   currDir,
   path,
+  setLines,
   enqueueLines,
   setInput,
   setCurrDir,
@@ -104,6 +106,7 @@ function handleCommand({
   const [base, arg] = trimmed.split(" ");
 
   if (base === "clear") {
+    setLines([<pre key="start" className={vt323.className}>{messageStart}</pre>])
     enqueueLines([]); // clear queue
     setInput("");
     return;
@@ -153,7 +156,7 @@ function handleCommand({
       (c) => c.type === "file" && c.name === arg
     ) as FileNode;
     if (file) {
-      enqueueLines([`> ${trimmed}`, `\nOpening file: ${file.name}\n\n`]);
+      enqueueLines([`> ${trimmed}`, `\n  Opening file: ${file.name}\n\n`]);
       setTextFileName(file.name);
       setShowTextFileWindow(true);
     } else {
@@ -172,7 +175,7 @@ function handleCommand({
         <a
           href="https://www.linkedin.com/in/aiden-gaul/"
           target="_blank"
-          className="underline hover:text-blue-300"
+          className="underline hover:text-blue-400"
         >
           https://www.linkedin.com/in/aiden-gaul/
         </a>
@@ -182,7 +185,7 @@ function handleCommand({
         <a
           href="https://www.github.com/aidengaul"
           target="_blank"
-          className="underline hover:text-blue-300"
+          className="underline hover:text-blue-400"
         >
           https://www.github.com/aidengaul
         </a>
@@ -191,7 +194,7 @@ function handleCommand({
         Email:{" "}
         <a
           href="mailto:agaul7113@gmail.com"
-          className="underline hover:text-blue-300"
+          className="underline hover:text-blue-400"
         >
           agaul7113@gmail.com
         </a>
@@ -268,7 +271,7 @@ const COMMANDS: Record<string, string> = {
   analytics and finding creative ways to present insights in a more digestible way.
   `,
 
-  clear: "clear",
+  clear: "",
 
   open: ``,
 };
@@ -300,6 +303,7 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
         command: input,
         currDir,
         path,
+        setLines,
         enqueueLines,
         setInput,
         setCurrDir,
@@ -345,6 +349,7 @@ export default function ConsoleWindow({setShowConsoleWindow}: {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
+              placeholder="type help to see available commands"
               autoFocus
             />
           </div>

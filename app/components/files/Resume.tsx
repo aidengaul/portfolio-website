@@ -4,7 +4,7 @@ export default function Resume() {
             <h1 className="text-4xl">Aiden Gaul</h1>
             <p>
                 813-527-4176 | 
-                agaul7113@gmail.com | 
+                <a href="mailto:agaul7113@gmail.com" className="hover:text-blue-400" > agaul7113@gmail.com</a> |
                 <a href="https://linkedin.com/in/aiden-gaul/" target="_blank" className="hover:text-blue-400"> linkedin.com/in/aiden-gaul/</a> | 
                 <a href="https://github.com/aidengaul" target="_blank" className="hover:text-blue-400"> github.com/aidengaul</a> 
                 </p>
