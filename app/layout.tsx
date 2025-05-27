@@ -12,6 +12,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={vt323.className}>
+      <title>Aiden Gaul</title>
       <body className="bg-[#138486] min-h-screen min-w-screen flex">
         <WindowManagerProvider>
           <DesktopIcons />
