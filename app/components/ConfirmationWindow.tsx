@@ -20,8 +20,8 @@ function ConfirmationWindowComponent({
     <div className="flex flex-col w-128 h-48 text-black text-2xl p-4">
       <p className="my-auto">Would you like to navigate to {url}?</p>
       <div className="flex flex-row gap-2">
-        <AppContainer children={<button className="w-36 hover:cursor-pointer" onClick={() => handleOpenNewTab()}>Yes</button>} />
-        <AppContainer children={<button className="w-36 hover:cursor-pointer" onClick={() => setShowConfirmationWindow(false)}>No</button>} />
+        <AppContainer><button className="w-36 hover:cursor-pointer" onClick={() => handleOpenNewTab()}>Yes</button></AppContainer>
+        <AppContainer><button className="w-36 hover:cursor-pointer" onClick={() => setShowConfirmationWindow(false)}>No</button></AppContainer>
       </div>
     </div>
   );
@@ -35,7 +35,9 @@ export default function ConfirmationWindow({
     <div className="">
         <AppContainer header={true} headerColor={"bg-[#012456]"} headerText={"Navigate to External Link"} 
             headerTextColor={"text-white"} closeButton={true} closeFunction={setShowConfirmationWindow} 
-            children={<ConfirmationWindowComponent setShowConfirmationWindow={setShowConfirmationWindow} url={url}/>}/>
+          >
+            <ConfirmationWindowComponent setShowConfirmationWindow={setShowConfirmationWindow} url={url}/>
+        </AppContainer>
     </div>
   );
 }

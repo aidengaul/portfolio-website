@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import AppContainer from "./AppContainer"
+import Image from "next/image";
 
 interface FileExplorerProps {
     setShowFileExplorerWindow: Dispatch<SetStateAction<boolean>>;
     setShowTextFileWindow: Dispatch<SetStateAction<boolean>>;
     setTextFileName: Dispatch<SetStateAction<string>>;
-    fileName: string;
 }
 
 const files = [
@@ -18,10 +18,8 @@ const files = [
 ];
 
 function FileExplorerComponent({
-    setShowFileExplorerWindow,
     setShowTextFileWindow,
     setTextFileName,
-    fileName
 }: Readonly<FileExplorerProps>) {
     const openTextFile = (fileName: string) => {
         setTextFileName(fileName);
@@ -36,7 +34,7 @@ function FileExplorerComponent({
                         <div key={fileName} 
                             className="flex flex-col gap-1 items-center w-40 p-4 hover:bg-blue-100 
                                 hover:border-blue-500 border-1 border-transparent hover:border-1 hover:cursor-pointer">
-                            <img
+                            <Image
                                 src="/txt_file.png"
                                 alt="Text File Icon"
                                 height={100}
@@ -55,14 +53,13 @@ export default function FileExplorerWindow({
     setShowFileExplorerWindow,
     setShowTextFileWindow,
     setTextFileName,
-    fileName
 }: Readonly<FileExplorerProps>) {
     return (
         <div className="">
-            <AppContainer header={true} headerText="File Explorer - /projects/" closeButton={true} closeFunction={setShowFileExplorerWindow}
-                children={<FileExplorerComponent setShowFileExplorerWindow={setShowFileExplorerWindow} 
-                    setShowTextFileWindow={setShowTextFileWindow} setTextFileName={setTextFileName} 
-                    fileName={fileName}/>}/>
+            <AppContainer header={true} headerText="File Explorer - /projects/" closeButton={true} closeFunction={setShowFileExplorerWindow}>
+                <FileExplorerComponent setShowFileExplorerWindow={setShowFileExplorerWindow} 
+                    setShowTextFileWindow={setShowTextFileWindow} setTextFileName={setTextFileName} />
+            </AppContainer>
         </div>
     )
 }

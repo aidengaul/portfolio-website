@@ -3,7 +3,7 @@ export default function MultiClassImageClassification() {
        <div className="w-full h-full bg-white p-4 overflow-auto text-xl">
             <h1 className="text-4xl">Multi Class Image Classification Model</h1>
             <p>
-                <a href="https://drive.google.com/file/d/1i5zK8WRzUBYvwC2dE4fqmaFu3xNjMuU7/view?usp=drive_link" target="_blank" className="hover:text-blue-400">Jupyter Link (Google Drive)</a>
+                <a href="https://colab.research.google.com/drive/1i5zK8WRzUBYvwC2dE4fqmaFu3xNjMuU7" target="_blank" className="hover:text-blue-400">Jupyter Link (Google Drive)</a>
             </p>
             <br />
 
@@ -34,9 +34,9 @@ export default function MultiClassImageClassification() {
                 Each layer is then passed into the ReLU activation function - except the output layer, which uses the softmax activation function to produce a probability distribution over the 12 classes.
                 <br />
                 <br />
-                Throughout the training process, I systematically adjusted the learning rate, dropout rates, and batch size to optimize the model's performance.
+                Throughout the training process, I systematically adjusted the learning rate, dropout rates, and batch size to optimize the model&apos;s performance.
                 The model achieved a final accuracy of ~80% on the test set, demonstrating its effectiveness in classifying images into the specified categories.
-                As part of the evaluation, I also generated a confusion matrix to visualize the model's performance across different classes, which helped identify performance differences across categories.
+                As part of the evaluation, I also generated a confusion matrix to visualize the model&apos;s performance across different classes, which helped identify performance differences across categories.
             </p>
             <br />
         </div>

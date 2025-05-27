@@ -38,7 +38,7 @@ export default function PersonalWebsite() {
                 <br />
                 <br />
                 The website is hosted on Vercel, which provides a fast and reliable hosting solution, along with a basic CI/CD pipeline
-                linked to the project's Github. I also used Figma to design a full mockup of the website before starting development, 
+                linked to the project&apos;s Github. I also used Figma to design a full mockup of the website before starting development, 
                 which helps me visualize the layout and functionality of the site.
             </p>
             <br />

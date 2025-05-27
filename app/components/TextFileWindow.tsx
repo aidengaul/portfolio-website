@@ -30,6 +30,8 @@ function TextFileWindowComponent({fileName}: {fileName: string}) {
 export default function TextFileWindow({setShowTextFileWindow, fileName}: {setShowTextFileWindow: React.Dispatch<React.SetStateAction<boolean>>, fileName: string}) {
   return (
     <AppContainer header={true} headerText={fileName} closeButton={true} closeFunction={setShowTextFileWindow} 
-        fullScreen={true} children={<TextFileWindowComponent fileName={fileName}/>}/>
-  )
+        fullScreen={true}>
+        <TextFileWindowComponent fileName={fileName}/>
+    </AppContainer>
+)
 }

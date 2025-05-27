@@ -2,7 +2,7 @@
 import { vt323 } from "./components/Font";
 import "./globals.css";
 import DesktopIcons from "./components/DesktopIcons";
-import { WindowManagerProvider, useWindowManager } from "./components/WindowManagerContext";
+import { WindowManagerProvider } from "./components/WindowManagerContext";
 
 export default function RootLayout({
   children,

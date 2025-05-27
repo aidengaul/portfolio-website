@@ -4,7 +4,6 @@ import TextFileWindow from "./components/TextFileWindow";
 import ConfirmationWindow from "./components/ConfirmationWindow";
 import FileExplorerWindow from "./components/FileExplorerWindow";
 import ConsoleWindow from "./components/ConsoleWindow";
-import AppContainer from "./components/AppContainer";
 import NoticeWindow from "./components/NoticeWindow";
 import { useState } from "react";
 
@@ -22,7 +21,6 @@ export default function Page() {
     setTextFileName,
     setShowFileExplorerWindow,
     setShowConsoleWindow,
-    setWindowStack,
     bringToFront
   } = useWindowManager();
   const [showNoticeWindow, setShowNoticeWindow] = useState(true);
@@ -39,7 +37,6 @@ export default function Page() {
               setShowFileExplorerWindow={setShowFileExplorerWindow}
               setShowTextFileWindow={setShowTextFileWindow}
               setTextFileName={setTextFileName}
-              fileName={textFileName}
             />
           )
         }
